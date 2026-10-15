@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fruit garden planner | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Fruit garden planner</h1></header>
+<main><section>
+<label>Rows<br><input id="rows" type="number" value="3"></label><label>Columns<br><input id="columns" type="number" value="6"></label><button id="run">Plant garden</button><div id="garden" style="display:grid;gap:8px;margin-top:24px;overflow:auto"></div><output id="result">Choose 1 to 12 rows and columns.</output>
+</section></main>
+<script>
+document.querySelector('#run').addEventListener('click', () => {
+  const rows = Number(document.querySelector('#rows').value);
+  const cols = Number(document.querySelector('#columns').value);
+  const status = document.querySelector('#result');
+  if (![rows, cols].every(n => Number.isInteger(n) && n > 0 && n <= 12)) {
+    status.textContent = 'Use whole numbers from 1 to 12.'; return;
+  }
+  const garden = document.querySelector('#garden');
+  garden.replaceChildren();
+  garden.style.gridTemplateColumns = `repeat(${cols}, 64px)`;
+  for (let index = 0; index < rows * cols; index++) {
+    const fruit = Math.random() < 0.5 ? 'apple' : 'orange';
+    const image = document.createElement('img');
+    image.src = `../assets/${fruit}.jpg`;
+    image.alt = fruit; image.width = 64; image.height = 64;
+    garden.append(image);
+  }
+  status.textContent = `${rows} rows × ${cols} columns = ${rows * cols} plants`;
+});
+</script>
+</body>
+</html>

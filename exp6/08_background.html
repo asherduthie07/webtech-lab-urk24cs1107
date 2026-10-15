@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timed background palette | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Timed background palette</h1></header>
+<main><section>
+<h2>A new colour every 30 seconds</h2><output id="colour"></output><p>The card stays white so the text remains readable.</p>
+</section></main>
+<script>
+function changeBackground() {
+  const rgb = Array.from({ length: 3 }, () => Math.floor(Math.random() * 256));
+  const colour = `rgb(${rgb.join(', ')})`;
+  document.body.style.backgroundColor = colour;
+  document.querySelector('#colour').textContent = `Current colour: ${colour}`;
+}
+changeBackground();
+setInterval(changeBackground, 30000);
+</script>
+</body>
+</html>

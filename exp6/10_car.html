@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Car movement controls | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Car movement controls</h1></header>
+<main><section>
+<div id="road" style="position:relative;height:150px;background:#dce7e9;overflow:hidden">
+<img id="car" src="../assets/car.svg" alt="car" width="120" style="position:absolute;left:0;top:35px">
+</div><button id="move">Move</button><button id="stop">Stop</button><output id="state">Stopped</output>
+</section></main>
+<script>
+let timer = null, position = 0;
+const car = document.querySelector('#car');
+document.querySelector('#move').addEventListener('click', () => {
+  if (timer !== null) return;
+  document.querySelector('#state').textContent = 'Moving';
+  timer = setInterval(() => {
+    const limit = document.querySelector('#road').clientWidth - car.width;
+    position = position + 4 > limit ? 0 : position + 4;
+    car.style.left = `${position}px`;
+  }, 25);
+});
+document.querySelector('#stop').addEventListener('click', () => {
+  clearInterval(timer); timer = null;
+  document.querySelector('#state').textContent = 'Stopped';
+});
+</script>
+</body>
+</html>

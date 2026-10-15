@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coin toss counter | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Coin toss counter</h1></header>
+<main><section>
+<img id="coin" src="../assets/heads.jpg" alt="heads" width="150" height="150">
+<br><button id="flip">Flip coin</button>
+<output>Heads: <span id="num_heads">0</span> | Tails: <span id="num_tails">0</span></output>
+</section></main>
+<script>
+const counts = { heads: 0, tails: 0 };
+document.querySelector('#flip').addEventListener('click', () => {
+  const side = Math.random() < 0.5 ? 'heads' : 'tails';
+  counts[side] += 1;
+  const coin = document.querySelector('#coin');
+  coin.src = `../assets/${side}.jpg`; coin.alt = side;
+  for (const outcome of Object.keys(counts)) {
+    document.querySelector(`#num_${outcome}`).textContent = counts[outcome];
+  }
+});
+</script>
+</body>
+</html>

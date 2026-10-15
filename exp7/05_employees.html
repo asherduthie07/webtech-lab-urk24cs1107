@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Employee management dashboard | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Employee management dashboard</h1></header>
+<main><section>
+<label>Employee ID<br><input id="employeeId" type="text" value="204"></label><label>Employee name<br><input id="employeeName" type="text" value="Anika"></label><label>Department<br><input id="department" type="text" value="Design"></label><div><button id="add">Add employee</button><button id="update">Update selected</button><button id="dimensions">Show table dimensions</button></div>
+<table id="employees"><thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Action</th></tr></thead><tbody></tbody></table><output id="status">Select a row to edit it.</output>
+</section></main>
+<script>
+let selected = null;
+const fields = ['employeeId', 'employeeName', 'department'];
+function status(message) { $('#status').text(message).css('background', '#e5f3ef'); }
+function values() { return fields.map(id => $('#' + id).val().trim()); }
+function valid(data) {
+  if (data.some(value => !value)) { status('Complete all fields.'); return false; }
+  const duplicate = $('#employees tbody tr').toArray().some(row =>
+    row !== selected && $(row).children().first().text() === data[0]);
+  if (duplicate) { status('Employee ID already exists.'); return false; }
+  return true;
+}
+function addRow(data) {
+  const row = $('<tr>');
+  data.forEach(value => $('<td>').text(value).appendTo(row));
+  $('<td>').append($('<button>').text('Remove').on('click', function (event) {
+    event.stopPropagation(); if (selected === row[0]) selected = null;
+    row.remove(); status('Employee removed successfully.');
+  })).appendTo(row);
+  row.on('click', function () {
+    selected = this; $('#employees tr').removeClass('selected');
+    row.addClass('selected');
+    fields.forEach((id, i) => $('#' + id).val(row.children().eq(i).text()));
+    status('Selected employee details loaded.');
+  });
+  $('#employees tbody').append(row);
+}
+[['201', 'Leena', 'HR'], ['202', 'Ishan', 'IT'], ['203', 'Maya', 'Finance']]
+  .forEach(addRow);
+$('#add').on('click', function () {
+  selected = null; $('#employees tr').removeClass('selected');
+  const data = values(); if (valid(data)) { addRow(data); status('Employee added successfully.'); }
+});
+$('#update').on('click', function () {
+  if (!selected) { status('Select an employee first.'); return; }
+  const data = values();
+  if (valid(data)) {
+    data.forEach((value, i) => $(selected).children().eq(i).text(value));
+    status('Employee updated successfully.');
+  }
+});
+$('#dimensions').on('click', function () {
+  status(`Table width: ${$('#employees').width()}px; height: ${$('#employees').height()}px`);
+});
+</script>
+</body>
+</html>

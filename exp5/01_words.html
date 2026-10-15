@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Word length explorer | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Word length explorer</h1></header>
+<main><section>
+<label>Sentence<br><input id="sentence" type="text" value="Web Development Tutorial"></label><button id="run">Find words</button><output id="result">Enter a sentence to begin.</output>
+</section></main>
+<script>
+function wordExtremes(sentence) {
+  const words = sentence.trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return 'Please enter at least one word.';
+  const result = words.reduce((a, word) => ({
+    shortest: word.length < a.shortest.length ? word : a.shortest,
+    longest: word.length > a.longest.length ? word : a.longest
+  }), { shortest: words[0], longest: words[0] });
+  return `Shortest: ${result.shortest} | Longest: ${result.longest}`;
+}
+document.querySelector('#run').addEventListener('click', () => {
+  document.querySelector('#result').textContent =
+    wordExtremes(document.querySelector('#sentence').value);
+});
+</script>
+</body>
+</html>

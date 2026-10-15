@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live digital clock | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Live digital clock</h1></header>
+<main><section>
+<p>Current local time</p><output id="clock" class="large"></output><p id="date"></p>
+</section></main>
+<script>
+function renderClock() {
+  const now = new Date();
+  const parts = [now.getHours(), now.getMinutes(), now.getSeconds()];
+  document.querySelector('#clock').textContent =
+    parts.map(n => String(n).padStart(2, '0')).join(':');
+  document.querySelector('#date').textContent = now.toDateString();
+}
+renderClock();
+setInterval(renderClock, 1000);
+</script>
+</body>
+</html>

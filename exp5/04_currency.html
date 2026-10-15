@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Currency conversion exercise | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Currency conversion exercise</h1></header>
+<main><section>
+<label>Amount<br><input id="amount" type="number" value="1500"></label><label>From<br><select id="from"><option>INR</option><option>USD</option></select></label>
+<label>To<br><select id="to"><option>USD</option><option>INR</option></select></label>
+<button id="run">Convert</button><output id="answer">Choose currencies.</output>
+<p>Fixed rates supplied in the lab question, not live exchange rates.</p>
+</section></main>
+<script>
+document.querySelector('#run').addEventListener('click', () => {
+  const amount = Number(document.querySelector('#amount').value);
+  const from = document.querySelector('#from').value;
+  const to = document.querySelector('#to').value;
+  const rate = from === to ? 1 : from === 'INR' ? 0.015 : 67.12;
+  document.querySelector('#answer').textContent =
+    Number.isFinite(amount) && amount >= 0
+      ? `${(amount * rate).toFixed(2)} ${to}` : 'Enter a valid amount.';
+});
+</script>
+</body>
+</html>

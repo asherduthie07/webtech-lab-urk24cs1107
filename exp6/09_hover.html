@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paragraph hover interaction | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Paragraph hover interaction</h1></header>
+<main><section>
+<p id="paragraph" tabindex="0">Move your pointer over this paragraph to enlarge it.</p><output id="state">Font size: 18px</output>
+</section></main>
+<script>
+const paragraph = document.querySelector('#paragraph');
+function resize(size) {
+  paragraph.style.fontSize = `${size}px`;
+  document.querySelector('#state').textContent = `Font size: ${size}px`;
+}
+paragraph.addEventListener('mouseenter', () => resize(28));
+paragraph.addEventListener('mouseleave', () => resize(18));
+paragraph.addEventListener('focus', () => resize(28));
+paragraph.addEventListener('blur', () => resize(18));
+resize(18);
+</script>
+</body>
+</html>

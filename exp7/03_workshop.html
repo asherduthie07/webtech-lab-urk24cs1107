@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Car appearance workshop | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Car appearance workshop</h1></header>
+<main><section>
+<div style="height:170px;padding:35px">
+<div id="body" style="position:relative;width:280px;height:75px;background:#267c87;border-radius:25px">
+<div id="glass" style="position:absolute;top:-25px;left:70px;width:130px;height:40px;background:#b0e0e6;border-radius:18px"></div>
+<div class="wheel" style="position:absolute;left:30px;bottom:-20px;border-radius:50%;background:#203238;width:45px;height:45px"></div>
+<div class="wheel" style="position:absolute;right:30px;bottom:-20px;border-radius:50%;background:#203238;width:45px;height:45px"></div></div></div>
+<label>Body colour <input type="color" id="paint" value="#267c87"></label>
+<label>Glass tint <input type="color" id="tint" value="#b0e0e6"></label>
+<label>Tyre size <input type="range" id="tyres" min="25" max="70" value="45"></label>
+<button id="reset">Reset</button><output id="result">Tyre diameter: 45px</output>
+</section></main>
+<script>
+$('#paint').on('input', function () { $('#body').css('background', $(this).val()); });
+$('#tint').on('input', function () { $('#glass').css('background', $(this).val()); });
+$('#tyres').on('input', function () {
+  const size = Number($(this).val());
+  $('.wheel').css({ width: size, height: size });
+  $('#result').text(`Tyre diameter: ${size}px`);
+});
+$('#reset').on('click', function () {
+  $('#paint').val('#267c87').trigger('input');
+  $('#tint').val('#b0e0e6').trigger('input');
+  $('#tyres').val(45).trigger('input');
+});
+</script>
+</body>
+</html>

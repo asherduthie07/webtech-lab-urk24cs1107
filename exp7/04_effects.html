@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product card effects | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Product card effects</h1></header>
+<main><section>
+<div id="buttons"></div>
+<article id="product" style="position:relative;width:420px;max-width:100%">
+<h2>Studio laptop</h2><p>Rs.65000 | Electronics | Available</p>
+<p id="details">A portable computer for design, coding and everyday work.</p></article>
+<output id="message">Choose an effect.</output>
+</section></main>
+<script>
+const product = $('#product');
+const effects = {
+  Show: () => product.show(), Hide: () => product.hide(),
+  Fade: () => product.fadeToggle(600),
+  Slide: () => $('#details').slideToggle(600),
+  Animate: () => product.animate({ left: 160 }, 2500),
+  Stop: () => product.stop(true, false),
+  Callback: () => {
+    $('#message').text('Animation in progress...');
+    product.show().animate({ left: 0 }, 900, function () {
+      $('#message').text('Animation completed successfully');
+    });
+  },
+  Chaining: () => product.slideUp(400).slideDown(400).fadeOut(400).fadeIn(400)
+};
+Object.entries(effects).forEach(([label, action]) => {
+  $('<button>').text(label).on('click', action).appendTo('#buttons');
+});
+</script>
+</body>
+</html>

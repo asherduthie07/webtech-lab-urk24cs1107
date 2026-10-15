@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Organization explorer | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Organization explorer</h1></header>
+<main><section>
+<div id="controls"></div>
+<div class="project"><h2>Project Horizon</h2>
+<section class="team"><h3>Development team</h3>
+<p class="employee">Aditi - Developer</p><p class="employee senior">Nikhil - Senior developer</p><p class="employee">Sara - Developer</p></section>
+<section class="team"><h3>Testing team</h3>
+<p class="employee">Dev - Tester</p><p class="employee senior">Rhea - Senior tester</p></section></div>
+<output id="status">Click an employee to select them.</output>
+</section></main>
+<script>
+let selected = null;
+$('.employee').on('click', function () {
+  $('.selected, .highlight').removeClass('selected highlight');
+  selected = $(this); selected.addClass('selected');
+  $('#status').text('Selected: ' + selected.text());
+});
+const actions = {
+  'Show parent team': s => s.parent('.team'),
+  'Show all ancestors': s => s.parents('.team, .project'),
+  'Show project employees': s => s.closest('.project').find('.employee'),
+  'Show teammates': s => s.siblings('.employee'),
+  'Show senior employees': s => s.closest('.project').find('.employee').filter('.senior'),
+  'Reset': () => $()
+};
+Object.entries(actions).forEach(([label, action]) => {
+  $('<button>').text(label).appendTo('#controls').on('click', function () {
+    $('.highlight').removeClass('highlight');
+    if (!selected) { $('#status').text('Select an employee first.'); return; }
+    const matches = action(selected); matches.addClass('highlight');
+    $('#status').text(`${label}: ${matches.length} matching element(s)`);
+  });
+});
+</script>
+</body>
+</html>

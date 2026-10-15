@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monthly budget planner | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Monthly budget planner</h1></header>
+<main><section>
+<label>Amount in rupees<br><input id="amount" type="number" value="20000"></label><label>Rent percent<br><input id="rent" type="number" value="40"></label><label>Accessories percent<br><input id="accessories" type="number" value="15"></label><label>Emergency percent<br><input id="emergency" type="number" value="20"></label><label>Saving percent<br><input id="saving" type="number" value="25"></label><button id="run">Evaluate my money</button><output id="result">Enter a budget.</output>
+</section></main>
+<script>
+$('#run').on('click', function () {
+  const amount = Number($('#amount').val());
+  const keys = ['rent', 'accessories', 'emergency', 'saving'];
+  const shares = keys.map(key => Number($('#' + key).val()));
+  const sum = shares.reduce((total, share) => total + share, 0);
+  if (!Number.isFinite(amount) || amount <= 0 ||
+      !shares.every(n => Number.isFinite(n) && n >= 0) || Math.abs(sum - 100) > 0.001) {
+    alert('Use a positive amount and nonnegative percentages totalling 100.');
+    return;
+  }
+  $('#result').empty();
+  keys.forEach((key, index) => {
+    $('<p>').text(`${key}: Rs.${(amount * shares[index] / 100).toFixed(2)}`)
+      .appendTo('#result');
+  });
+});
+</script>
+</body>
+</html>

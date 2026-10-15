@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Birthday cake order | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Birthday cake order</h1></header>
+<main><section>
+<label>Half kilogram cakes<br><input id="small" type="number" value="2"></label><label>One kilogram cakes<br><input id="medium" type="number" value="1"></label><label>Two kilogram cakes<br><input id="large" type="number" value="0"></label><label>Tip after tax<br><select id="tip"><option>10</option><option selected>15</option><option>20</option></select></label>
+<button id="run">Calculate order</button><output id="price">Your bill appears here.</output>
+</section></main>
+<script>
+document.querySelector('#run').addEventListener('click', () => {
+  const quantities = ['small', 'medium', 'large'].map(id =>
+    Number(document.getElementById(id).value));
+  const result = document.querySelector('#price');
+  if (!quantities.every(n => Number.isInteger(n) && n >= 0)) {
+    result.textContent = 'Cake quantities must be nonnegative integers.'; return;
+  }
+  const subtotal = quantities.reduce((sum, qty, i) =>
+    sum + qty * [100, 200, 400][i], 0);
+  const taxed = subtotal * 1.09;
+  const tip = taxed * Number(document.querySelector('#tip').value) / 100;
+  result.textContent = `Subtotal Rs.${subtotal.toFixed(2)} | ` +
+    `Tax Rs.${(taxed - subtotal).toFixed(2)} | Tip Rs.${tip.toFixed(2)} | ` +
+    `Total Rs.${(taxed + tip).toFixed(2)}`;
+});
+</script>
+</body>
+</html>

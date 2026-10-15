@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student CRUD API console</title><link rel="stylesheet" href="../lab.css"></head><body><header><small>23CS2049 - Web Technology Lab | URK24CS1107</small><h1>Student CRUD API console</h1></header><main><section><p>Send requests to the Node.js and Mongoose API.</p>
+<label>Method <select id="method"><option>POST</option><option>GET</option><option>PUT</option><option>DELETE</option></select></label>
+<label>Endpoint <input id="endpoint" value="/api/students" size="32"></label><br>
+<textarea id="body" rows="7" style="width:100%;font:16px monospace">{"regNo":"URK24CS1107","name":"Sample Student","department":"CSE","email":"student1107@example.com","cgpa":8.7}</textarea>
+<button id="send">Send request</button><output id="status">Ready</output><pre id="response" style="white-space:pre-wrap"></pre></section></main><script>
+document.querySelector('#send').addEventListener('click', async () => {
+  const method = document.querySelector('#method').value;
+  const endpoint = document.querySelector('#endpoint').value;
+  if (!endpoint.startsWith('/api/students')) return;
+  try {
+    const options = {method, headers:{'Content-Type':'application/json'}};
+    if (['POST','PUT'].includes(method)) {
+      options.body = JSON.stringify(JSON.parse(document.querySelector('#body').value));
+    }
+    const response = await fetch(endpoint, options);
+    document.querySelector('#status').textContent = `${method} ${endpoint} → HTTP ${response.status}`;
+    document.querySelector('#response').textContent = JSON.stringify(await response.json(),null,2);
+  } catch(error) { document.querySelector('#status').textContent = error.message; }
+});
+</script></body></html>

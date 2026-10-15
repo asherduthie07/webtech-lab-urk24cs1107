@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cake shop bill | URK24CS1107</title>
+<link rel="stylesheet" href="../lab.css">
+<script src="../vendor/jquery.min.js"></script>
+</head>
+<body>
+<header><small>23CS2049 - Web Technology Lab | URK24CS1107</small>
+<h1>Cake shop bill</h1></header>
+<main><section>
+<label>Color cake Rs.300<br><input id="q0" type="number" value="1"></label><label>Brown cake Rs.200<br><input id="q1" type="number" value="2"></label><label>Milky cake Rs.250<br><input id="q2" type="number" value="1"></label><label>Black forest Rs.350<br><input id="q3" type="number" value="0"></label><button id="run">Place order</button><output id="bill">Total Rs.0.00</output>
+</section></main>
+<script>
+const prices = [300, 200, 250, 350];
+$('#run').on('click', function () {
+  const quantities = prices.map((_, index) => Number($('#q' + index).val()));
+  if (!quantities.every(n => Number.isInteger(n) && n >= 0)) {
+    $('#bill').text('Enter nonnegative whole quantities.'); return;
+  }
+  const total = quantities.reduce((sum, qty, i) => sum + qty * prices[i], 0);
+  $('#bill').text(`Purchase order total: Rs.${total.toFixed(2)}`);
+});
+</script>
+</body>
+</html>
